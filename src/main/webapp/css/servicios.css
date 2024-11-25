@@ -1,0 +1,301 @@
+/* Estilos generales */
+* {
+    margin: 0;
+    padding: 0;
+    box-sizing: border-box;
+}
+
+body {
+    font-family: 'Poppins', sans-serif;
+    line-height: 1.6;
+    color: #333;
+}
+
+/* Navbar */
+.navbar {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    padding: 1rem 5%;
+    position: fixed;
+    top: 0;
+    left: 0;
+    right: 0;
+    z-index: 1000;
+    transition: all 0.3s ease;
+    background-color: #ffffff;
+}
+
+.navbar-white {
+    background-color: #ffffff;
+    box-shadow: 0 2px 10px rgba(0, 0, 0, 0.1);
+}
+
+.logo img {
+    height: 70px;
+}
+
+.nav-links {
+    display: flex;
+    list-style: none;
+
+}
+
+.nav-links li {
+    margin-left: 2rem;
+}
+
+.nav-links a {
+    text-decoration: none;
+    font-weight: 600;
+    transition: color 0.3s ease;
+    color: #333;
+}
+
+.navbar-white .nav-links a {
+    color: #333;
+}
+
+.nav-links a:hover {
+    color: #00bfff;
+}
+
+.btn-reservar {
+    background-color: #00bfff;
+    color: #ffffff !important;
+    padding: 0.5rem 1rem;
+    border-radius: 5px;
+    transition: background-color 0.3s ease;
+}
+
+.btn-reservar:hover {
+    background-color: #0056b3;
+}
+
+.burger {
+    display: none;
+    cursor: pointer;
+}
+.burger div {
+    width: 25px;
+    height: 3px;
+    background-color: #333;
+    margin: 5px;
+    transition: all 0.3s ease;
+}
+
+/* Especialidades */
+.especialidades {
+    padding: 4rem 5%;
+    background-color: #f8f9fa;
+    margin-top: 100px;
+}
+
+.especialidades h2 {
+    text-align: center;
+    margin-bottom: 2rem;
+    font-size: 2.5rem;
+    color: #007bff;
+}
+
+.especialidades-container {
+    display: flex;
+    flex-direction: column;
+    gap: 2rem;
+}
+
+.especialidad-card {
+    display: flex;
+    align-items: center;
+    background-color: #ffffff;
+    border-radius: 10px;
+    box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
+    overflow: hidden;
+}
+
+.especialidad-card img {
+    width: 50%;
+    height: auto;
+}
+
+.especialidad-info {
+    padding: 2rem;
+    width: 50%;
+}
+
+.especialidad-info h3 {
+    font-size: 1.5rem;
+    margin-bottom: 1rem;
+    color: #007bff;
+}
+
+.especialidad-info p {
+    font-size: 1rem;
+    color: #333;
+}
+
+.reverse {
+    flex-direction: row-reverse;
+}
+
+/* Por qué elegirnos */
+.por-que-elegirnos {
+    padding: 4rem 5%;
+    background-color: #ffffff;
+}
+
+.por-que-elegirnos h2 {
+    text-align: center;
+    margin-bottom: 2rem;
+    font-size: 2.5rem;
+    color: #007bff;
+}
+
+.razones-grid {
+    display: flex;
+    justify-content: center;
+    flex-wrap: wrap;
+    gap: 2rem;
+}
+
+.razon {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    text-align: center;
+    padding: 2rem;
+    background-color: #f8f9fa;
+    border-radius: 10px;
+    box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
+    width: 250px;
+}
+
+.razon i {
+    font-size: 2rem;
+    color: #007bff;
+    margin-bottom: 1rem;
+}
+
+.razon h3 {
+    font-size: 1.5rem;
+    margin-bottom: 1rem;
+    color: #007bff;
+}
+
+.razon p {
+    font-size: 1rem;
+    color: #333;
+}
+
+/* Footer */
+footer {
+    background-color: #333;
+    color: #ffffff;
+    padding: 3rem 5% 1rem;
+}
+
+.footer-content {
+    display: flex;
+    justify-content: space-between;
+    flex-wrap: wrap;
+    max-width: 1200px;
+    margin: 0 auto;
+}
+
+.footer-section {
+    flex: 1;
+    margin-bottom: 2rem;
+}
+
+.footer-section h3 {
+    font-size: 1.2rem;
+    margin-bottom: 1rem;
+}
+
+.footer-section p {
+    margin-bottom: 0.5rem;
+}
+
+.social-icons a {
+    color: #ffffff;
+    font-size: 1.5rem;
+    margin-right: 1rem;
+    transition: color 0.3s ease;
+}
+
+.social-icons a:hover {
+    color: #007bff;
+}
+
+.footer-bottom {
+    text-align: center;
+    margin-top: 2rem;
+    padding-top: 1rem;
+    border-top: 1px solid #555;
+}
+
+/* Responsive design */
+@media screen and (max-width: 768px) {
+    .nav-links {
+        position: absolute;
+        right: 0px;
+        height: 92vh;
+        top: 8vh;
+        background-color: #ffffff;
+        display: flex;
+        flex-direction: column;
+        align-items: center;
+        width: 50%;
+        transform: translateX(100%);
+        transition: transform 0.5s ease-in;
+    }
+
+    .nav-links li {
+        opacity: 0;
+    }
+
+    .burger {
+        display: block;
+    }
+
+    .contacto-container {
+        flex-direction: column;
+    }
+
+    .footer-content {
+        flex-direction: column;
+        align-items: center;
+    }
+
+    .footer-section {
+        text-align: center;
+        margin-bottom: 2rem;
+    }
+}
+
+.nav-active {
+    transform: translateX(0%);
+}
+
+@keyframes navLinkFade {
+    from {
+        opacity: 0;
+        transform: translateX(50px);
+    }
+    to {
+        opacity: 1;
+        transform: translateX(0px);
+    }
+}
+
+.toggle .line1 {
+    transform: rotate(-45deg) translate(-5px, 6px);
+}
+
+.toggle .line2 {
+    opacity: 0;
+}
+
+.toggle .line3 {
+    transform: rotate(45deg) translate(-5px, -6px);
+}

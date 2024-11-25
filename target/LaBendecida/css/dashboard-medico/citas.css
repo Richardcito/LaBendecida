@@ -1,0 +1,178 @@
+/* Estilos para la sección de citas */
+.main-content {
+    padding: 20px;
+}
+
+.dashboard-header {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    margin-bottom: 2rem;
+}
+
+.dashboard-header h1 {
+    color: var(--primary-color);
+    font-size: 1.8rem;
+    display: flex;
+    align-items: center;
+    gap: 10px;
+}
+
+/* Sección de filtros */
+.filters-section {
+    background: white;
+    padding: 1.5rem;
+    border-radius: 10px;
+    box-shadow: var(--shadow);
+    margin-bottom: 2rem;
+}
+
+.filters {
+    display: flex;
+    gap: 1rem;
+    align-items: center;
+}
+
+.filters select, 
+.filters input[type="date"] {
+    padding: 8px 12px;
+    border: 1px solid #ddd;
+    border-radius: 5px;
+    font-size: 0.9rem;
+    min-width: 200px;
+}
+
+.btn-filter {
+    background-color: var(--secondary-color);
+    color: white;
+    border: none;
+    padding: 8px 16px;
+    border-radius: 5px;
+    cursor: pointer;
+    display: flex;
+    align-items: center;
+    gap: 8px;
+    transition: all 0.3s ease;
+}
+
+.btn-filter:hover {
+    background-color: #2980b9;
+}
+
+/* Tabla de citas */
+.citas-table {
+    background: white;
+    padding: 1.5rem;
+    border-radius: 10px;
+    box-shadow: var(--shadow);
+    overflow-x: auto;
+}
+
+table {
+    width: 100%;
+    border-collapse: collapse;
+    margin-top: 1rem;
+}
+
+th {
+    background-color: var(--gray-light);
+    color: var(--primary-color);
+    font-weight: 600;
+    text-align: left;
+    padding: 12px;
+    font-size: 0.9rem;
+}
+
+td {
+    padding: 12px;
+    border-bottom: 1px solid #eee;
+    font-size: 0.9rem;
+}
+
+/* Estados de las citas */
+.status {
+    padding: 6px 12px;
+    border-radius: 20px;
+    font-size: 0.8rem;
+    font-weight: 500;
+}
+
+.status.pendiente {
+    background-color: #fff3cd;
+    color: #856404;
+}
+
+.status.confirmada {
+    background-color: #d4edda;
+    color: #155724;
+}
+
+.status.cancelada {
+    background-color: #f8d7da;
+    color: #721c24;
+}
+
+.status.completada {
+    background-color: #cce5ff;
+    color: #004085;
+}
+
+/* Botones de acción */
+.actions {
+    display: flex;
+    gap: 8px;
+}
+
+.btn-action {
+    background: none;
+    border: none;
+    padding: 6px;
+    cursor: pointer;
+    border-radius: 4px;
+    transition: all 0.3s ease;
+}
+
+.btn-action:hover {
+    background-color: var(--gray-light);
+}
+
+.btn-action i {
+    font-size: 1.1rem;
+}
+
+/* Confirmar */
+.btn-action:nth-child(1) i {
+    color: #28a745;
+}
+
+/* Cancelar */
+.btn-action:nth-child(2) i {
+    color: #dc3545;
+}
+
+/* Completar */
+.btn-action:nth-child(3) i {
+    color: #007bff;
+}
+
+/* Responsive */
+@media (max-width: 768px) {
+    .filters {
+        flex-direction: column;
+        align-items: stretch;
+    }
+    
+    .filters select, 
+    .filters input[type="date"] {
+        width: 100%;
+    }
+    
+    table {
+        display: block;
+        overflow-x: auto;
+    }
+    
+    td, th {
+        min-width: 120px;
+    }
+} 
