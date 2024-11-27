@@ -79,6 +79,7 @@ document.addEventListener('DOMContentLoaded', function() {
             headers: {
                 'Content-Type': 'application/x-www-form-urlencoded',
             },
+            
             body: new URLSearchParams(formData)
         })
         .then(response => response.json())

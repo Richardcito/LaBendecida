@@ -2,6 +2,7 @@ com\mycompany\labendecida\dao\UsuarioDAO.class
 com\mycompany\labendecida\model\Usuario.class
 com\mycompany\labendecida\controller\LoginRegistroServlet.class
 com\mycompany\labendecida\controller\SobreNosotrosServlet.class
+com\mycompany\labendecida\controller\DashboardAdminServlet.class
 com\mycompany\labendecida\controller\InicioServlet.class
 com\mycompany\labendecida\controller\ReservarCitaServlet.class
 com\mycompany\labendecida\model\Cita.class

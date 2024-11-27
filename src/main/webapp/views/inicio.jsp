@@ -27,7 +27,7 @@
           <li><a href="${pageContext.request.contextPath}/medicos">Médicos</a></li>
           <li><a href="${pageContext.request.contextPath}/sobre-nosotros">Sobre Nosotros</a></li>
           <li>
-            <a href="${pageContext.request.contextPath}/login-registro" id="reservarCitaLink" class="btn-reservar">
+            <a href="${pageContext.request.contextPath}/reservar_cita" id="reservarCitaLink" class="btn-reservar">
               Reservar Cita
             </a>
           </li>

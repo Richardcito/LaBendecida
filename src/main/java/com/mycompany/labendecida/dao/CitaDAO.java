@@ -84,4 +84,47 @@ public class CitaDAO {
             return false;
         }
     }
+    
+    public int getCitasHoy() throws SQLException {
+        String sql = "SELECT COUNT(*) FROM citas WHERE DATE(fecha) = CURRENT_DATE";
+        try (PreparedStatement stmt = Conexion.getConnection().prepareStatement(sql)) {
+            ResultSet rs = stmt.executeQuery();
+            if (rs.next()) {
+                return rs.getInt(1);
+            }
+        }
+        return 0;
+    }
+    
+    public List<Cita> getCitasRecientes(int limit) throws SQLException {
+        List<Cita> citas = new ArrayList<>();
+        String sql = "SELECT c.*, " +
+                    "CONCAT(ip_pac.nombre, ' ', ip_pac.apellido) as nombre_paciente, " +
+                    "CONCAT(ip_med.nombre, ' ', ip_med.apellido) as nombre_medico " +
+                    "FROM citas c " +
+                    "JOIN informacion_personal ip_pac ON c.paciente_id = ip_pac.usuario_id " +
+                    "JOIN medicos m ON c.medico_id = m.id " +
+                    "JOIN informacion_personal ip_med ON m.usuario_id = ip_med.usuario_id " +
+                    "ORDER BY c.fecha DESC LIMIT ?";
+
+        try (Connection conn = Conexion.getConnection();
+             PreparedStatement stmt = conn.prepareStatement(sql)) {
+            stmt.setInt(1, limit);
+            ResultSet rs = stmt.executeQuery();
+            
+            while (rs.next()) {
+                Cita cita = new Cita();
+                cita.setId(rs.getInt("id"));
+                cita.setNombrePaciente(rs.getString("nombre_paciente"));
+                cita.setNombreMedico(rs.getString("nombre_medico"));
+                cita.setFecha(rs.getDate("fecha"));
+                cita.setHora(rs.getTime("hora"));
+                cita.setHoraFin(rs.getTime("hora_fin"));
+                cita.setMotivo(rs.getString("motivo"));
+                cita.setEstado(rs.getString("estado"));
+                citas.add(cita);
+            }
+        }
+        return citas;
+    }
 } 

@@ -6,6 +6,8 @@ import java.sql.Connection;
 import java.sql.PreparedStatement;
 import java.sql.ResultSet;
 import java.sql.SQLException;
+import java.util.ArrayList;
+import java.util.List;
 
 public class UsuarioDAO {
     private Connection conexion;
@@ -232,5 +234,69 @@ public class UsuarioDAO {
         }
         
         return usuario;
+    }
+
+    public int getTotalUsuarios() throws SQLException {
+        String sql = "SELECT COUNT(*) FROM usuarios WHERE id NOT IN " +
+                    "(SELECT usuario_id FROM medicos)";
+        try (PreparedStatement stmt = conexion.prepareStatement(sql)) {
+            ResultSet rs = stmt.executeQuery();
+            if (rs.next()) {
+                return rs.getInt(1);
+            }
+        }
+        return 0;
+    }
+
+    public int getTotalMedicos() throws SQLException {
+        String sql = "SELECT COUNT(*) FROM medicos";
+        try (PreparedStatement stmt = conexion.prepareStatement(sql)) {
+            ResultSet rs = stmt.executeQuery();
+            if (rs.next()) {
+                return rs.getInt(1);
+            }
+        }
+        return 0;
+    }
+
+    public int getTotalEspecialidades() throws SQLException {
+        String sql = "SELECT COUNT(*) FROM especialidades";
+        try (PreparedStatement stmt = conexion.prepareStatement(sql)) {
+            ResultSet rs = stmt.executeQuery();
+            if (rs.next()) {
+                return rs.getInt(1);
+            }
+        }
+        return 0;
+    }
+
+    public List<Usuario> getUsuariosRecientes(int limit) throws SQLException {
+        List<Usuario> usuarios = new ArrayList<>();
+        String sql = "SELECT u.*, ip.nombre, ip.apellido " +
+                    "FROM usuarios u " +
+                    "LEFT JOIN informacion_personal ip ON u.id = ip.usuario_id " +
+                    "ORDER BY u.fecha_registro DESC LIMIT ?";
+        
+        try (PreparedStatement stmt = conexion.prepareStatement(sql)) {
+            stmt.setInt(1, limit);
+            ResultSet rs = stmt.executeQuery();
+            
+            while (rs.next()) {
+                Usuario usuario = new Usuario();
+                usuario.setId(rs.getInt("id"));
+                usuario.setEmail(rs.getString("email"));
+                
+                // Construir el nombre completo
+                String nombre = rs.getString("nombre");
+                String apellido = rs.getString("apellido");
+                if (nombre != null && apellido != null) {
+                    usuario.setNombre(nombre + " " + apellido); // Asumiendo que tienes setNombre()
+                } else {
+                    usuario.setNombre(rs.getString("email")); // Si no hay nombre, usar email
+                }
+                usuarios.add(usuario);
+            }
+        }
+        return usuarios;
     }
 }
