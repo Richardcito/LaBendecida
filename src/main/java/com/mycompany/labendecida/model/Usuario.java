@@ -1,5 +1,7 @@
 package com.mycompany.labendecida.model;
 
+import java.sql.Timestamp;
+
 public class Usuario {
     private int id;
     private String email;
@@ -9,6 +11,25 @@ public class Usuario {
     private int medicoId;
     private int especialidadId;
     private String numeroColegiado;
+    private Timestamp fechaRegistro;
+    private String apellido;
+    private boolean estado;
+    private int rol_id;
+
+    public Usuario(int id, String email, String password, String nombre, String rol, int medicoId, int especialidadId,
+            String numeroColegiado, Timestamp fechaRegistro, String apellido, boolean estado) {
+        this.id = id;
+        this.email = email;
+        this.password = password;
+        this.nombre = nombre;
+        this.rol = rol;
+        this.medicoId = medicoId;
+        this.especialidadId = especialidadId;
+        this.numeroColegiado = numeroColegiado;
+        this.fechaRegistro = fechaRegistro;
+        this.apellido = apellido;
+        this.estado = estado;
+    }
 
     // Constructor
     public Usuario() {
@@ -77,5 +98,41 @@ public class Usuario {
 
     public void setNumeroColegiado(String numeroColegiado) {
         this.numeroColegiado = numeroColegiado;
+    }
+
+    public Timestamp getFechaRegistro() {
+        return fechaRegistro;
+    }
+
+    public void setFechaRegistro(Timestamp fechaRegistro) {
+        this.fechaRegistro = fechaRegistro;
+    }
+
+    public String getApellido() {
+        return apellido;
+    }
+
+    public void setApellido(String apellido) {
+        this.apellido = apellido;
+    }
+
+    public boolean isEstado() {
+        return estado;
+    }
+
+    public void setEstado(boolean estado) {
+        this.estado = estado;
+    }
+
+    public void setRol(int rol) {
+        this.rol_id = rol;
+    }
+
+    public int getRol_id() {
+        return rol_id;
+    }
+
+    public void setRol_id(int rol_id) {
+        this.rol_id = rol_id;
     }
 } 

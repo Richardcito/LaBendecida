@@ -119,8 +119,65 @@
                 <div class="recent-activity">
                     <h2>Actividad Reciente</h2>
                     <div class="activity-container">
-                        <!-- Aquí irá el contenido dinámico de la actividad reciente -->
-                        <p>No hay actividad reciente para mostrar.</p>
+                        <!-- Usuarios Recientes -->
+                        <div class="recent-users">
+                            <h3>Usuarios Recientes</h3>
+                            <div class="table-responsive">
+                                <table>
+                                    <thead>
+                                        <tr>
+                                            <th>Nombre</th>
+                                            <th>Email</th>
+                                            <th>Fecha Registro</th>
+                                        </tr>
+                                    </thead>
+                                    <tbody>
+                                        <c:forEach items="${usuariosRecientes}" var="usuario">
+                                            <tr>
+                                                <td>${usuario.nombre} ${usuario.apellido}</td>
+                                                <td>${usuario.email}</td>
+                                                <td>
+                                                    <c:if test="${usuario.fechaRegistro != null}">
+                                                        ${usuario.fechaRegistro}
+                                                    </c:if>
+                                                </td>
+                                            </tr>
+                                        </c:forEach>
+                                    </tbody>
+                                </table>
+                            </div>
+                        </div>
+
+                        <!-- Citas Recientes -->
+                        <div class="recent-appointments">
+                            <h3>Citas Recientes</h3>
+                            <div class="table-responsive">
+                                <table>
+                                    <thead>
+                                        <tr>
+                                            <th>Paciente</th>
+                                            <th>Médico</th>
+                                            <th>Fecha</th>
+                                            <th>Estado</th>
+                                        </tr>
+                                    </thead>
+                                    <tbody>
+                                        <c:forEach items="${citasRecientes}" var="cita">
+                                            <tr>
+                                                <td>${cita.nombrePaciente}</td>
+                                                <td>${cita.nombreMedico}</td>
+                                                <td>${cita.fecha} ${cita.hora}</td>
+                                                <td>
+                                                    <span class="status-badge ${cita.estado.toLowerCase()}">
+                                                        ${cita.estado}
+                                                    </span>
+                                                </td>
+                                            </tr>
+                                        </c:forEach>
+                                    </tbody>
+                                </table>
+                            </div>
+                        </div>
                     </div>
                 </div>
             </section>

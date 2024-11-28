@@ -21,6 +21,9 @@ public class Cita {
     private String nombreMedico;
     private String apellidoMedico;
     
+    // Agregar solo los campos nuevos que necesitamos
+    private String nombreEspecialidad;
+    
     // Constructor
     public Cita() {}
     
@@ -119,5 +122,13 @@ public class Cita {
 
     public void setApellidoMedico(String apellidoMedico) {
         this.apellidoMedico = apellidoMedico;
+    }
+
+    public String getNombreEspecialidad() {
+        return nombreEspecialidad;
+    }
+
+    public void setNombreEspecialidad(String nombreEspecialidad) {
+        this.nombreEspecialidad = nombreEspecialidad;
     }
 } 

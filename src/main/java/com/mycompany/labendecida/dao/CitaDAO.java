@@ -105,7 +105,7 @@ public class CitaDAO {
                     "JOIN informacion_personal ip_pac ON c.paciente_id = ip_pac.usuario_id " +
                     "JOIN medicos m ON c.medico_id = m.id " +
                     "JOIN informacion_personal ip_med ON m.usuario_id = ip_med.usuario_id " +
-                    "ORDER BY c.fecha DESC LIMIT ?";
+                    "ORDER BY c.fecha DESC, c.hora DESC LIMIT ?";
 
         try (Connection conn = Conexion.getConnection();
              PreparedStatement stmt = conn.prepareStatement(sql)) {
@@ -115,16 +115,63 @@ public class CitaDAO {
             while (rs.next()) {
                 Cita cita = new Cita();
                 cita.setId(rs.getInt("id"));
-                cita.setNombrePaciente(rs.getString("nombre_paciente"));
-                cita.setNombreMedico(rs.getString("nombre_medico"));
+                cita.setPacienteId(rs.getInt("paciente_id"));
+                cita.setMedicoId(rs.getInt("medico_id"));
                 cita.setFecha(rs.getDate("fecha"));
                 cita.setHora(rs.getTime("hora"));
                 cita.setHoraFin(rs.getTime("hora_fin"));
                 cita.setMotivo(rs.getString("motivo"));
                 cita.setEstado(rs.getString("estado"));
+                cita.setNombrePaciente(rs.getString("nombre_paciente"));
+                cita.setNombreMedico(rs.getString("nombre_medico"));
                 citas.add(cita);
             }
         }
+        return citas;
+    }
+    
+    public List<Cita> getAllCitas() throws SQLException {
+        List<Cita> citas = new ArrayList<>();
+        String sql = "SELECT c.*, " +
+                    "CONCAT(p.nombre, ' ', p.apellido) as nombre_paciente, " +
+                    "CONCAT(m.nombre, ' ', m.apellido) as nombre_medico, " +
+                    "e.nombre as nombre_especialidad " +
+                    "FROM citas c " +
+                    "LEFT JOIN informacion_personal p ON c.paciente_id = p.usuario_id " +
+                    "LEFT JOIN medicos med ON c.medico_id = med.id " +
+                    "LEFT JOIN informacion_personal m ON med.usuario_id = m.usuario_id " +
+                    "LEFT JOIN especialidades e ON med.especialidad_id = e.id " +
+                    "ORDER BY c.id ASC";
+        
+        try (Connection conn = Conexion.getConnection();
+             PreparedStatement stmt = conn.prepareStatement(sql)) {
+            
+            System.out.println("Ejecutando consulta SQL: " + sql); // Debug
+            
+            try (ResultSet rs = stmt.executeQuery()) {
+                while (rs.next()) {
+                    Cita cita = new Cita();
+                    cita.setId(rs.getInt("id"));
+                    cita.setPacienteId(rs.getInt("paciente_id"));
+                    cita.setMedicoId(rs.getInt("medico_id"));
+                    cita.setFecha(rs.getDate("fecha"));
+                    cita.setHora(rs.getTime("hora"));
+                    cita.setEstado(rs.getString("estado"));
+                    
+                    cita.setNombrePaciente(rs.getString("nombre_paciente"));
+                    cita.setNombreMedico(rs.getString("nombre_medico"));
+                    cita.setNombreEspecialidad(rs.getString("nombre_especialidad"));
+                    
+                    citas.add(cita);
+                }
+            }
+        } catch (SQLException e) {
+            System.err.println("Error SQL: " + e.getMessage());
+            e.printStackTrace();
+            throw e;
+        }
+        
+        System.out.println("Total citas encontradas: " + citas.size()); // Debug
         return citas;
     }
 } 
