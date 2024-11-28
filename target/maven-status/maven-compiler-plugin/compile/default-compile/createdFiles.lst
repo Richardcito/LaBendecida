@@ -18,6 +18,7 @@ com\mycompany\labendecida\config\Conexion.class
 com\mycompany\labendecida\resources\JakartaEE10Resource.class
 com\mycompany\labendecida\dao\UsuarioDAO.class
 com\mycompany\labendecida\model\Medico.class
+com\mycompany\labendecida\dao\UsuarioRolDAO.class
 com\mycompany\labendecida\model\Usuario.class
 com\mycompany\labendecida\dao\RolDAO.class
 com\mycompany\labendecida\controller\LoginRegistroServlet.class

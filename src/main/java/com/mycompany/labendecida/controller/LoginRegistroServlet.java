@@ -1,6 +1,7 @@
 package com.mycompany.labendecida.controller;
 
 import com.mycompany.labendecida.dao.UsuarioDAO;
+import com.mycompany.labendecida.dao.UsuarioRolDAO;
 import com.mycompany.labendecida.model.Usuario;
 import jakarta.servlet.ServletException;
 import jakarta.servlet.annotation.WebServlet;
@@ -59,10 +60,39 @@ public class LoginRegistroServlet extends HttpServlet {
             HttpSession session = request.getSession();
             session.setAttribute("usuario", usuario);
             
+            // Obtener el rol usando el nuevo UsuarioRolDAO
+            UsuarioRolDAO usuarioRolDAO = new UsuarioRolDAO();
+            String rol = usuarioRolDAO.obtenerRolPorUsuarioId(usuario.getId());
+            String redirectUrl;
+            
+            // Determinar la redirección según el rol
+            if (rol != null) {
+                switch(rol.toLowerCase()) {
+                    case "admin":
+                    case "administrador":
+                        redirectUrl = "/dashboard-admin";
+                        break;
+                    case "medico":
+                        redirectUrl = "/dashboard-medico";
+                        break;
+                    case "paciente":
+                        redirectUrl = "/inicio";
+                        break;
+                    default:
+                        redirectUrl = "/inicio";
+                        break;
+                }
+            } else {
+                redirectUrl = "/inicio"; // Si no se encuentra rol
+            }
+            
+            // Guardar el rol en la sesión para uso futuro
+            session.setAttribute("rolUsuario", rol);
+            
             jsonResponse.put("success", true);
             jsonResponse.put("message", "Inicio de sesión exitoso");
-            jsonResponse.put("redirect", request.getContextPath() + "/inicio");
-            System.out.println("Login exitoso - Redirigiendo a: " + request.getContextPath() + "/inicio"); // Debug
+            jsonResponse.put("redirect", request.getContextPath() + redirectUrl);
+            System.out.println("Login exitoso - Redirigiendo a: " + request.getContextPath() + redirectUrl); // Debug
         } else {
             jsonResponse.put("success", false);
             jsonResponse.put("message", "Credenciales inválidas");
@@ -80,7 +110,8 @@ public class LoginRegistroServlet extends HttpServlet {
             
             System.out.println("Intento de registro - Nombre: " + nombre + ", Email: " + email); // Debug
             
-            if (nombre == null || apellido == null || email == null || password == null) {
+            if (nombre == null || apellido == null || email == null || password == null || 
+                nombre.trim().isEmpty() || apellido.trim().isEmpty() || email.trim().isEmpty() || password.trim().isEmpty()) {
                 jsonResponse.put("success", false);
                 jsonResponse.put("message", "Todos los campos son requeridos");
                 return;
@@ -98,9 +129,14 @@ public class LoginRegistroServlet extends HttpServlet {
             nuevoUsuario.setEmail(email);
             nuevoUsuario.setPassword(password);
             
+            // Registrar usuario y obtener el ID generado
             int userId = usuarioDAO.registrarUsuario(nuevoUsuario, nombre, apellido);
             
             if (userId > 0) {
+                // Asignar rol de paciente por defecto
+                UsuarioRolDAO usuarioRolDAO = new UsuarioRolDAO();
+                usuarioRolDAO.asignarRol(userId, 3); // Asumiendo que 3 es el ID del rol "paciente"
+                
                 jsonResponse.put("success", true);
                 jsonResponse.put("message", "Registro exitoso. Por favor, inicia sesión.");
                 System.out.println("Registro exitoso - UserID: " + userId); // Debug
